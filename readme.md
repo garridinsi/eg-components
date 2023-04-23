@@ -2,7 +2,7 @@
 
 # EG Web Components
 
-Reusable Stencil web components, meant for web projects. Check [last version here](https://github.com/garridinsi/eg-components/pkgs/npm/eg-components).
+Reusable Stencil web components, meant for web projects. Check [last version here](https://www.npmjs.com/package/@garridinsi/eg-components).
 
 # Stencil
 
