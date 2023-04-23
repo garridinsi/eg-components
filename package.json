@@ -1,5 +1,5 @@
 {
-  "name": "eg-components",
+  "name": "@garridinsi/eg-components",
   "version": "0.0.1",
   "description": "EG Web Components collection",
   "main": "dist/index.cjs.js",
