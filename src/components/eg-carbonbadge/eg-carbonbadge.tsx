@@ -20,6 +20,24 @@ export class EgCarbonbadge {
 
   componentWillLoad() {
     this.isDark = this.theme === 'dark';
+    this.encodedUrl = encodeURIComponent(this.url);
+    this.cachedResponse = localStorage.getItem('wcb_' + this.encodedUrl);
+
+    const t = new Date().getTime();
+    // If there is a cached response, use it
+    if (this.cachedResponse) {
+      const r: WCResponse = JSON.parse(this.cachedResponse);
+      this.mountComponentText(r);
+
+      // If time since response was cached is over a day, then make a new request and update the cached result in the background
+      if (t - r.timestamp > 86400000) {
+        this.newRequest(false);
+      }
+
+      // If no cached response, then fetch from API
+    } else {
+      this.newRequest();
+    }
   }
 
   newRequest = (render: boolean = true) => {
@@ -60,27 +78,6 @@ export class EgCarbonbadge {
     this.wcbg = `${this.coValue}g of CO<sub>2</sub>/view`;
     this.wcb2 = `Cleaner than ${this.percentage} of pages tested`;
   };
-
-  componentWillRender() {
-    this.encodedUrl = encodeURIComponent(this.url);
-    this.cachedResponse = localStorage.getItem('wcb_' + this.encodedUrl);
-
-    const t = new Date().getTime();
-    // If there is a cached response, use it
-    if (this.cachedResponse) {
-      const r: WCResponse = JSON.parse(this.cachedResponse);
-      this.mountComponentText(r);
-
-      // If time since response was cached is over a day, then make a new request and update the cached result in the background
-      if (t - r.timestamp > 86400000) {
-        this.newRequest(false);
-      }
-
-      // If no cached response, then fetch from API
-    } else {
-      this.newRequest();
-    }
-  }
 
   render() {
     return (
